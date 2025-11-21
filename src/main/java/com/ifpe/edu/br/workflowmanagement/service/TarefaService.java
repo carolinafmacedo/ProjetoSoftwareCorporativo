@@ -90,4 +90,24 @@ public class TarefaService {
     public Comentario adicionarComentario(Long idTarefa, String texto, Long idAutor) {
         return comentarioService.criarComentario(idTarefa, texto, idAutor);
     }
+
+    @Transactional
+    public void excluirTarefa(Long idTarefa, Long idUsuarioExecutor) {
+        Tarefa tarefa = tarefaRepository.findById(idTarefa)
+                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada."));
+        
+        Usuario executor = usuarioRepository.findById(idUsuarioExecutor)
+                .orElseThrow(() -> new RuntimeException("Usuário executor não encontrado."));
+
+        // Verificação de Permissões
+        boolean isGerente = tarefa.getProjeto().getGerente().getId().equals(idUsuarioExecutor);
+        boolean isResponsavel = tarefa.getResponsavel() != null && tarefa.getResponsavel().getId().equals(idUsuarioExecutor);
+        boolean isAdmin = "ADMIN".equalsIgnoreCase(executor.getPapel().getNome());
+
+        if (!isGerente && !isResponsavel && !isAdmin) {
+            throw new SecurityException("Você não tem permissão para excluir esta tarefa.");
+        }
+
+        tarefaRepository.delete(tarefa);
+    }
 }

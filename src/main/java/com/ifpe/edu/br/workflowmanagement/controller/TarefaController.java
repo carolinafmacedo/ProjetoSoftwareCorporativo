@@ -90,4 +90,20 @@ public class TarefaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // 5. Excluir Tarefa
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> excluirTarefa(
+            @PathVariable Long id,
+            @RequestParam Long idExecutor) {
+        try {
+            tarefaService.excluirTarefa(id, idExecutor);
+            return ResponseEntity.noContent().build(); // Retorna 204 (Sucesso sem conteúdo)
+        } catch (SecurityException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
+
