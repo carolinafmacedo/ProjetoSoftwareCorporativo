@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "registros_horas")
 public class RegistroHoras {
@@ -21,13 +23,13 @@ public class RegistroHoras {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    @JsonIgnore
     @NotNull(message = "A tarefa é obrigatória")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tarefa_id", nullable = false)
     private Tarefa tarefa;
 
-    // MUDANÇA CRÍTICA: Float -> BigDecimal
-    // Precision 10, Scale 2 significa algo como: 99999999.99
+
     @NotNull(message = "A quantidade de horas é obrigatória")
     @Positive(message = "A quantidade de horas deve ser positiva")
     @Column(nullable = false, precision = 10, scale = 2)

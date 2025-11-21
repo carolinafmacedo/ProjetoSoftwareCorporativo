@@ -1,10 +1,13 @@
 package com.ifpe.edu.br.workflowmanagement.service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "papeis")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Papel {
 
     @Id

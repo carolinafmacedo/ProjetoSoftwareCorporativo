@@ -1,9 +1,12 @@
 package com.ifpe.edu.br.workflowmanagement.service.entities;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "etapas")
@@ -20,6 +23,7 @@ public class Etapa {
     @Column(nullable = false)
     private int ordem;
 
+    @JsonIgnore
     @NotNull(message = "A etapa deve pertencer a um fluxo de trabalho")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fluxo_trabalho_id", nullable = false)

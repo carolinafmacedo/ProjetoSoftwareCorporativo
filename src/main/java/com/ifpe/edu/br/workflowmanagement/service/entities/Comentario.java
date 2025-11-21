@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "comentarios")
 public class Comentario {
@@ -18,6 +20,7 @@ public class Comentario {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario autor;
 
+    @JsonIgnore
     @NotNull(message = "O comentário deve pertencer a uma tarefa")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tarefa_id", nullable = false)
