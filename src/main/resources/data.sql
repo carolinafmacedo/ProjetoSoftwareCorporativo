@@ -1,0 +1,3 @@
+INSERT INTO papeis (nome) VALUES ('ADMIN');
+INSERT INTO papeis (nome) VALUES ('GERENTE');
+INSERT INTO papeis (nome) VALUES ('DESENVOLVEDOR');
